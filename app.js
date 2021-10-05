@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000
 
 //Connection with MongoDb
 const uri = `mongodb+srv://BlogDatabase:${password.password}@cluster0.e5fzw.mongodb.net/BlogDb?retryWrites=true&w=majority`;
-mongoose.connect(uri, {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true});
 
 //Connection Initiated
 const connection = mongoose.connection;
