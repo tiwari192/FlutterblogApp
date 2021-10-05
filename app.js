@@ -22,7 +22,7 @@ app.use('/user', userRoute);
 
 
 app.get('/', (req, res) => {
-    res.send('Welcome');
+    res.send('Welcome to the Rest APi client');
 })
 
 app.listen(port, () => {
