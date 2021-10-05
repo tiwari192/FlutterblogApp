@@ -1,12 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const password = require('./password')
+
 
 const app = express()
 const port = process.env.PORT || 3000
 
 //Connection with MongoDb
-const uri = `mongodb+srv://BlogDatabase:${password.password}@cluster0.e5fzw.mongodb.net/BlogDb?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://BlogDatabase:BlogPeepals@123@cluster0.e5fzw.mongodb.net/BlogDb?retryWrites=true&w=majority`;
 mongoose.connect(uri, {useNewUrlParser: true});
 
 //Connection Initiated
