@@ -1,9 +1,9 @@
 const express = require('express')
 const User = require('../models/user.model')
-const config = require('../config');
 const jwt = require('jsonwebtoken');
 const middleware = require('../middleware');
 const router = express.Router()
+require('dotenv').config()
 
 //Log in a user
 router.route('/login').post((req, res) => {
@@ -11,6 +11,7 @@ router.route('/login').post((req, res) => {
         {userName : req.body.userName},
         (err, result) => {
             if(err){
+                console.log("error");
                 return res.status(500).json({msg : err});
             }
 
@@ -20,7 +21,7 @@ router.route('/login').post((req, res) => {
 
             if(result.password == req.body.password){
                 //Here we implement JWT Token functionality
-                let token = jwt.sign({username : req.body.userName}, config.key, {expiresIn : "24h"});
+                let token = jwt.sign({username : req.body.userName}, JWT_SECRETKEY, {expiresIn : "24h"});
                 return res.json({token : token, msg: 'Success'});
             }
 

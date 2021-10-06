@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
-const config = require('./config');
+require('dotenv').config()
 
 let checkToken = (req, res, next) => {
     let token = req.headers['authorization'];
     token = token.slice(7, token.length);
     if(token){
-        jwt.verify(token, config.key, (err, decoded) => {
+        jwt.verify(token, JWT_SECRETKEY, (err, decoded) => {
             if(err){
                 return res.json({status: false, msg: "token is invalid"});
             }
