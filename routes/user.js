@@ -32,6 +32,22 @@ router.route('/login').post((req, res) => {
     )
 })
 
+//Checking Unique username from database
+router.route('/checkusername/:username').get((req, res) => {
+    User.findOne(
+        {userName: req.params.username},
+        (err, result) => {
+            if(err) return res.status(500).json({msg : err});
+            if(result !== null){
+                return res.json({status : 'true'});
+            }
+            else{
+                return res.json({status : 'false'});
+            }
+        }
+    )
+})
+
 //Gettng a User from databae
 router.route('/:username').get(middleware.checkToken, (req, res) => {
     User.findOne(
