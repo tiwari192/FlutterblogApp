@@ -5,7 +5,7 @@ let checkToken = (req, res, next) => {
     let token = req.headers['authorization'];
     token = token.slice(7, token.length);
     if(token){
-        jwt.verify(token, JWT_SECRETKEY, (err, decoded) => {
+        jwt.verify(token, process.env.JWT_SECRETKEY, (err, decoded) => {
             if(err){
                 return res.json({status: false, msg: "token is invalid"});
             }
