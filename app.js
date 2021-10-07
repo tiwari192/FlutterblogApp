@@ -5,7 +5,7 @@ const app = express()
 const port = process.env.PORT || 5000
 
 //Connection with MongoDb
-//const uri = 'mongodb+srv://BlogDatabase:BlogPeepals%40123@cluster0.e5fzw.mongodb.net/BlogDb?retryWrites=true&w=majority';
+
 mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true});
 
 //Connection Initiated
