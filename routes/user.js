@@ -48,7 +48,7 @@ router.route('/checkusername/:username').get((req, res) => {
     )
 })
 
-//Gettng a User from databae
+//Getting a User from databae
 router.route('/:username').get(middleware.checkToken, (req, res) => {
     User.findOne(
         {userName: req.params.username},
@@ -58,7 +58,7 @@ router.route('/:username').get(middleware.checkToken, (req, res) => {
             }
             
             if(result){
-                console.log("HEllo");
+                //console.log("HEllo");
                 return res.json({
                     data : result,
                     username : req.params.username
