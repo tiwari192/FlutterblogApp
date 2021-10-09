@@ -5,7 +5,10 @@ const app = express()
 const port = process.env.PORT || 5000
 
 //Connection with MongoDb
+<<<<<<< HEAD
 
+=======
+>>>>>>> cec11969c8c6571eb50febb4fa4a34be03582a63
 mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true});
 
 //Connection Initiated
