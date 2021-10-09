@@ -30,17 +30,17 @@ const upload = multer({
     limits: {
         fileSize: 1024 * 1024 * 5,
     },
-    fileFilter: fileFilter,
+    
 });
 //For uploading image
 
 
 //adding and updating profile image
 router.route('/add/image')
-    .patch(middleware.checkToken, upload.single("img"), async (req, res) => {
+    .patch(middleware.checkToken, upload.single("img"), (req, res) => {
 
         
-        await Profile.findOneAndUpdate(
+        Profile.findOneAndUpdate(
             {userName: req.decoded.username}, 
             {
                 $set: {image: req.file.path}
