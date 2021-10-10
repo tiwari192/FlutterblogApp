@@ -58,8 +58,7 @@ router.route('/add/image')
         ).clone();
         
 
-})
-
+});
 
 //Adding a user profile to database
 router.route('/add').post(middleware.checkToken, (req, res) => {
@@ -101,5 +100,64 @@ router.route('/checkProfile').get(middleware.checkToken, (req, res) => {
         }
     );
 });
+
+//loading profile data 
+router.route('/getData').get(middleware.checkToken, (req, res) => {
+    Profile.findOne(
+        {userName: req.decoded.username},
+        (err, result) => {
+            if(err) return res.json({err: err});
+            if(result == null){
+                return res.json({data: []});
+            }
+            else{
+                return res.json({data: result});
+            }
+        }
+    );
+});
+
+
+//updating profile data
+router.route('/update').patch(middleware.checkToken, (req, res) => {
+
+    let profile = {};
+    Profile.findOne(
+        {userName: req.decoded.username},
+        (err, result) => {
+            if(err) {
+                profile = {};
+            }
+            if(result != null){
+                profile = result;
+            }
+        }
+    );
+
+    Profile.findOneAndUpdate(
+        {userName: req.decoded.username},
+        {
+            $set: {
+                name: req.body.name ? req.body.name : profile.name,
+                profession: req.body.profession ? req.body.profession : profile.profession,
+                dob: req.body.dob ? req.body.dob : profile.dob,
+                titleline : req.body.titleline ? req.body.titleline : profile.titleline, 
+                about: req.body.about ? req.body.about : profile.about
+            }
+        },
+        (err, result) => {
+            if(err) return res.json({err: err});
+            if(result == null){
+                return res.json({data: []});
+            }
+            else{
+                return res.json({msg : "Profile updated successfully"});
+            }
+        }
+    );
+
+
+});
+
 
 module.exports = router;
