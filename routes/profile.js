@@ -30,7 +30,7 @@ const upload = multer({
     limits: {
         fileSize: 1024 * 1024 * 6,
     },
-    
+
 });
 //For uploading image
 
@@ -39,16 +39,16 @@ const upload = multer({
 router.route('/add/image')
     .patch(middleware.checkToken, upload.single("img"), (req, res) => {
 
-        
+
         Profile.findOneAndUpdate(
-            {userName: req.decoded.username}, 
+            { userName: req.decoded.username },
             {
-                $set: {image: req.file.path}
+                $set: { image: req.file.path }
             },
             { new: true },
             (err, profile) => {
-                if(err) return res.status(500).send(err);
-                if(profile == null) return res.status(400).json({msg: 'username not found'});
+                if (err) return res.status(500).send(err);
+                if (profile == null) return res.status(400).json({ msg: 'username not found' });
                 const response = {
                     message: 'image updated successfully',
                     data: profile
@@ -56,9 +56,9 @@ router.route('/add/image')
                 return res.status(200).send(response);
             }
         ).clone();
-        
 
-});
+
+    });
 
 //Adding a user profile to database
 router.route('/add').post(middleware.checkToken, (req, res) => {
@@ -75,27 +75,27 @@ router.route('/add').post(middleware.checkToken, (req, res) => {
     });
 
     profile
-            .save()
-            .then(() => {
-                console.log('Profile added to database');
-                return res.status(200).json({msg : "Profile successfully stored"});
-            })
-            .catch(err => {
-                return res.status(400).json({err : err});
-            })
+        .save()
+        .then(() => {
+            console.log('Profile added to database');
+            return res.status(200).json({ msg: "Profile successfully stored" });
+        })
+        .catch(err => {
+            return res.status(400).json({ err: err });
+        })
 })
 
 //Checking if profile data is available
 router.route('/checkProfile').get(middleware.checkToken, (req, res) => {
     Profile.findOne(
-        {userName: req.decoded.username},
+        { userName: req.decoded.username },
         (err, result) => {
-            if(err) return res.json({err: err});
-            if(result == null){
-                return res.json({status: 'false'});
+            if (err) return res.json({ err: err });
+            if (result == null) {
+                return res.json({ status: 'false' });
             }
-            else{
-                return res.json({status: 'true'});
+            else {
+                return res.json({ status: 'true' });
             }
         }
     );
@@ -104,14 +104,14 @@ router.route('/checkProfile').get(middleware.checkToken, (req, res) => {
 //loading profile data 
 router.route('/getData').get(middleware.checkToken, (req, res) => {
     Profile.findOne(
-        {userName: req.decoded.username},
+        { userName: req.decoded.username },
         (err, result) => {
-            if(err) return res.json({err: err});
-            if(result == null){
-                return res.json({data: []});
+            if (err) return res.json({ err: err });
+            if (result == null) {
+                return res.json({ data: [] });
             }
-            else{
-                return res.json({data: result});
+            else {
+                return res.json({ data: result });
             }
         }
     );
@@ -123,35 +123,35 @@ router.route('/update').patch(middleware.checkToken, (req, res) => {
 
     let profile = {};
     Profile.findOne(
-        {userName: req.decoded.username},
+        { userName: req.decoded.username },
         (err, result) => {
-            if(err) {
+            if (err) {
                 profile = {};
             }
-            if(result != null){
+            if (result != null) {
                 profile = result;
             }
         }
     );
 
     Profile.findOneAndUpdate(
-        {userName: req.decoded.username},
+        { userName: req.decoded.username },
         {
             $set: {
                 name: req.body.name ? req.body.name : profile.name,
                 profession: req.body.profession ? req.body.profession : profile.profession,
                 dob: req.body.dob ? req.body.dob : profile.dob,
-                titleline : req.body.titleline ? req.body.titleline : profile.titleline, 
+                titleline: req.body.titleline ? req.body.titleline : profile.titleline,
                 about: req.body.about ? req.body.about : profile.about
             }
         },
         (err, result) => {
-            if(err) return res.json({err: err});
-            if(result == null){
-                return res.json({data: []});
+            if (err) return res.json({ err: err });
+            if (result == null) {
+                return res.json({ data: [] });
             }
-            else{
-                return res.json({msg : "Profile updated successfully"});
+            else {
+                return res.json({ msg: "Profile updated successfully" });
             }
         }
     );

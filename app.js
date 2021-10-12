@@ -6,7 +6,7 @@ const port = process.env.PORT || 5000
 
 //Connection with MongoDb
 
-mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true});
+mongoose.connect(process.env.DB_HOST, { useNewUrlParser: true });
 
 //Connection Initiated
 const connection = mongoose.connection;
@@ -26,6 +26,11 @@ app.use('/user', userRoute);
 // '/profile' handler
 const profileRoute = require('./routes/profile');
 app.use('/profile', profileRoute);
+
+
+// '/blogPost' handler
+const blogPostRoute = require('./routes/blogPost');
+app.use('/blogPost', blogPostRoute);
 
 
 app.get('/', (req, res) => {
